@@ -2,9 +2,65 @@
 <html lang="en" dir="ltr">
 	<head>
 		<meta charset="utf-8">
-		<title>Opal Card Application</title>
+		<title>Opal Card Application | transportnsw.info</title>
 	</head>
 	<body>
+
+		<div class="nsw-infobar">
+			<div class="nsw-container">
+			  <p>A NSW Government website</p>
+			</div>
+		</div>
+		<header class="nsw-header">
+			<div class="nsw-container">
+			  <div class="nsw-header__wrapper">
+				<div class="nsw-header__center">
+				  <a href="#https://transportnsw.info/" class="nsw-header__logo-link">
+					<svg class="nsw-icon nsw-header__logo" focusable="false" aria-hidden="true">
+					  <use xlink:href="#https://transportnsw.info/themes/custom/tfnsw_bootstrap/assets/logos/logo-waratah-transport.svg"></use>
+					</svg>
+					<span class="sr-only">Transport NSW</span>
+				  </a>
+				</div>
+				<div class="nsw-header__left">
+				  <button type="button" class="nsw-header-btn nsw-header-btn--menu">
+					<svg class="nsw-icon nsw-header-btn__icon" focusable="false" aria-hidden="true">
+					  <use xlink:href="#menu"></use>
+					  <span class="nsw-header-btn__sub"><span class="sr-only"></span>Open</span> Menu</span>
+					</svg>
+				  </button>
+				</div>
+				<div class="nsw-header__right">
+				  <button type="button" class="nsw-header-btn nsw-header-btn--search js-open-search" aria-expanded="false"
+					aria-controls="header-search">
+					<svg class="nsw-icon nsw-header-btn__icon" focusable="false" aria-hidden="true">
+					  <use xlink:href="#search"></use>
+					</svg>
+					<span class="nsw-header-btn__sub"><span class="sr-only">Show</span> Search</span>
+				  </button>
+				</div>
+			  </div>
+			  <div class="nsw-search">
+				<div id="header-search" class="nsw-search__area js-search-area" hidden>
+				  <form role="search">
+					<label for="nsw-search__input" class="sr-only">Search site for:</label>
+					<input autocomplete="off" class="nsw-search__input js-search-input" id="nsw-search__input"
+					  name="input-autocomplete" type="text">
+					<svg class="nsw-icon nsw-search__search-icon" focusable="false" aria-hidden="true">
+					  <use xlink:href="#search"></use>
+					</svg>
+				  </form>
+				  <button class="nsw-search__close-btn js-close-search" aria-expanded="true" aria-controls="header-search">
+					<svg class="nsw-icon nsw-search__close-icon" focusable="false" aria-hidden="true">
+					  <use xlink:href="#close"></use>
+					</svg>
+					<span class="sr-only">Close search</span>
+				  </button>
+				</div>
+			  </div>
+		</header>
+
+
 		<h1>Opal Card Application</h1>
 		<form method="post">
 			<h2>Account:</h2>
@@ -20,10 +76,15 @@
 					<option value="Mss">Mss</option>
 					<option value="Mrs">Mrs</option>
 					<option value="Dr">Dr</option>
-					<option value="Other">Other</option>
+					<!-- when this option is clicked, set txt_other_title's visibility to match this box's checked status -->
+					<option value="Other" id="chb_other_title">
+						Other
+					</option>
 				</select>
-				<label for="other_title">Title:</label>
-				<input type="text" name="other_title" id="other_title" hidden class="required_if_visible">
+				<div id="div_other_title">
+					<label for="txt_other_title" hidden class="required_if_visible">Title:</label>
+					<input type="text" name="other_title" id="txt_other_title" hidden class="required_if_visible">	
+				</div>
 				<label for="FirstName">First Name</label>
 				<input type="text" name="first_name" id="first_name" value="" class="required_if_visible">
 				<label for="LastName">Last Name</label>
@@ -54,7 +115,10 @@
 				</div>
 
 				<h3>Postal Address</h3>
-				<input type="checkbox" name="postal_address_is_residential_address" id="postal_address_is_residential_address" checked>
+				<!-- when this is clicked change postal_address to be hidden iff this is checked -->
+				<input type="checkbox" name="postal_address_is_residential_address" id="postal_address_is_residential_address" checked
+					onclick="matchVisibleToCheckbox('postal_address_is_residential_address','postal_address',true)"
+				>
 				<label for="postal_address_is_residential_address">Same as Residential Address</label>
 				<!-- this div is to get the indentation the same for both address sections -->
 				<div id="postal_address" hidden>
@@ -104,52 +168,72 @@
 			<h2>Concession Entitlement</h2>
 			<!-- Each concession entitlement type has a div of additonal content it reveals -->
 
-			<input type="checkbox" name="concession" value="nsw_seniors" id="nsw_seniors">
+			<input type="checkbox" name="concession" class="pension_checkbox" value="nsw_seniors" id="nsw_seniors"
+				onclick="concessionClicked('nsw_seniors')"
+			>
 			<label for="nsw_seniors">NSW Seniors Card Holder</label>
 			<div class="entitlement_details" id="nsw_seniors_div" hidden>
 				<label for="nsw_seniors_card_number">Seniors Card Number</label>
 				<input type="text" name="nsw_seniors_card_number" id="nsw_seniors_card_number" class="required_if_visible">
 			</div>
+			<br>
 
-			<input type="checkbox" name="concession" value="act_seniors" id="act_seniors">
+			<input type="checkbox" name="concession" class="pension_checkbox" value="act_seniors" id="act_seniors"
+				onclick="concessionClicked('act_seniors')"
+			>
 			<label for="act_seniors">ACT Seniors Card Holder</label>
 			<div class="entitlement_details" id="act_seniors_div" hidden>
 				<label for="act_seniors_card_number">Seniors Card Number</label>
 				<input type="text" name="act_seniors_card_number" id="act_seniors_card_number" class="required_if_visible">
 			</div>
+			<br>
 
-			<input type="checkbox" name="concession" value="war_widow" id="war_widow">
+			<input type="checkbox" name="concession" class="pension_checkbox" value="war_widow" id="war_widow"
+				onclick="concessionClicked('war_widow')"
+			>
 			<label for="war_widow">NSW War Widow</label>
 			<div class="war_widow" id="war_widow_div" hidden>
 				<label for="war_widow_concession_number">War Widower Transport Concession Card Number</label>
 				<input type="text" name="war_widow_concession_number" id="war_widow_concession_number" class="required_if_visible">
 			</div>
+			<br>
 
-			<input type="checkbox" name="concession" value="ex_defence" id="ex_defence">
+			<input type="checkbox" name="concession" class="pension_checkbox" value="ex_defence" id="ex_defence"
+				onclick="concessionClicked('ex_defence')"
+			>
 			<label for="ex_defence">Ex-Defence with a Disability/DVA pensioner</label>
 			<div class="entitlement_details" id="ex_defence_div" hidden>
 				<label for="dva_file_number">Your DVA file number (using capital letters without any spaces e.g. NNN12345) </label>
 				<input type="text" name="dva_file_number" id="dva_file_number" class="required_if_visible">
 				<label for="uin">UIN</label>
-				<input type="text" name="uin" id="uin">	
+				<input type="text" name="uin" id="uin">
 			</div>
+			<br>
 
 			<!-- Pensioners receive a different concession from e.g. newstart recipients but the app should be able to figure which category the user falls in rather than making them do it -->
-			<input type="checkbox" name="concession" value="jobseeker" id="jobseeker">
+			<input type="checkbox" name="concession" class="concession_checkbox" value="jobseeker" id="jobseeker"
+				onclick="concessionClicked('jobseeker')"
+			>
 			<label for="jobseeker">Pensioner, Registered Jobseeker or Other Approved Centrelink Customer</label>
 			<div class="entitlement_details" id="jobseeker_div" hidden>
 				<label for="centrelink_crn">Centrelink Customer Reference Number (CRN)</label>
 				<input type="text" name="centrelink_crn" id="centrelink_crn" class="required_if_visible">	
 			</div>
+			<br>
 
-			<input type="checkbox" name="concession" value="tafe_student" id="tafe_student">
+			<input type="checkbox" name="concession" class="concession_checkbox" value="tafe_student" id="tafe_student"
+				onclick="concessionClicked('tafe_student')"
+			>
 			<label for="tafe_student">Tafe NSW Student</label>
 			<div class="entitlement_details" id="tafe_student_div" hidden>
 				<label for="tafe_student_number">TAFE NSW Student Learner Number</label>
 				<input type="text" name="tafe_student_number" id="tafe_student_number" class="required_if_visible">	
 			</div>
+			<br>
 
-			<input type="checkbox" name="concession" value="tertiary_student" id="tertiary_student">
+			<input type="checkbox" name="concession" class="concession_checkbox" value="tertiary_student" id="tertiary_student"
+				onclick="concessionClicked('tertiary_student')"
+			>
 			<label for="tertiary_student">Other Tertiary Student</label>
 			<div class="entitlement_details" id="tertiary_student_div" hidden>
 				<label for="tertiary_institution">Tertiary Institution</label>
@@ -157,15 +241,21 @@
 				<label for="tertiary_student_number">Tertiary Student ID Number</label>
 				<input type="text" name="tertiary_student_number" id="tertiary_student_number" class="required_if_visible">	
 			</div>
+			<br>
 
-			<input type="checkbox" name="concession" value="apprentice_trainee" id="apprentice_trainee">
+			<input type="checkbox" name="concession" class="concession_checkbox" value="apprentice_trainee" id="apprentice_trainee"
+				onclick="concessionClicked('apprentice_trainee')"
+			>
 			<label for="apprentice_trainee">Apprentice or Trainee</label>
 			<div class="entitlement_details" id="apprentice_trainee_div" hidden>
 				<label for="tcid">Training Contract ID (TCID)</label>
 				<input type="text" name="tcid" id="tcid" class="required_if_visible">	
 			</div>
+			<br>
 
-			<input type="checkbox" name="concession" value="asylum_seeker" id="asylum_seeker">
+			<input type="checkbox" name="concession" class="concession_checkbox" value="asylum_seeker" id="asylum_seeker"
+				onclick="concessionClicked('asylum_seeker')"
+			>
 			<label for="asylum_seeker">Asylum Seeker</label>
 			<div class="entitlement_details" id="asylum_seeker_div" hidden>
 				<label for="designated_agency">Designated Agency</label>
@@ -209,19 +299,219 @@
 				<input type="file" name="asylum_seeker_supporting_documents" id="asylum_seeker_supporting_documents">
 				<p><i>Upload the certification form completed by the Designated Agency to support your application. All applications require this certification in order to be processed.</i></p>
 			</div>
+			<br>
 
 			<!-- reveal this for all concession types, but not when no concession type is selected -->
-			<label for="concession_check_permission">
-				I understand that Transport for NSW will use the information I provide in this application to verify my eligibility for a Concession/Gold Opal card. I understand that Transport for NSW will, from time to time share my personal information with third parties (such as the issuer of my concession entitlement) in line with the
-				<a href="https://www.opal.com.au/footer/privacy/" target="_blank">Opal Privacy Policy</a> for the purpose of verifying my initial and on-going eligibility for a Concession/Gold Opal card.
-				<br>I also understand that Transport for NSW will collect, hold, use and disclose my personal information as described in the Opal Privacy Policy.
-			</label>
-			<input type="checkbox" name="concession_check_permission" value="concession_check_permission" id="concession_check_permission" class="required_if_visible" hidden>
+			<div id="concession_check_permission_div" hidden>
+				<input type="checkbox" name="concession_check_permission" value="concession_check_permission" id="concession_check_permission" class="required_if_visible">	
+				<label for="concession_check_permission">
+					I understand that Transport for NSW will use the information I provide in this application to verify my eligibility for a Concession/Gold Opal card. I understand that Transport for NSW will, from time to time share my personal information with third parties (such as the issuer of my concession entitlement) in line with the
+					<a href="https://www.opal.com.au/footer/privacy/" target="_blank">Opal Privacy Policy</a> for the purpose of verifying my initial and on-going eligibility for a Concession/Gold Opal card.
+					<br>I also understand that Transport for NSW will collect, hold, use and disclose my personal information as described in the Opal Privacy Policy.
+				</label>
+			</div>
+			<br>
 
 			<p>Fare Type: <span id="card_type">Adult Full Fare</span></p>
 
 			<input type="submit" value="NEXT">
 
 		</form>
+
+		<script>
+
+			// this should make the div with id "div" hidden if the checkbox with id "checkbox" is checked, and unhidden otherwise- inverted if inverse is true.
+			function matchVisibleToCheckbox(checkboxName,divName,inverse){				
+				document.getElementById(divName).hidden = document.getElementById(checkboxName).checked?inverse:!inverse;
+			};
+
+			// set all required_if_visible elements to be required iff they are visible
+			function setRequirements(){
+				var requiredIfVisibleElements = document.querySelectorAll(".required_if_visible");
+				for(i=0;i<requiredIfVisibleElements.length;i++){
+					requiredIfVisibleElements[i].required=!requiredIfVisibleElements[i].hidden
+				}
+			};
+
+			// function to run whenever a concession checkbox is clicked, with a checkbox-specific parameter
+			function concessionClicked(checkbox){
+				matchVisibleToCheckbox(checkbox,checkbox+"_div",false);
+				var concessionType = 0;
+				// 0=adult,1=concession,2=pension
+				// if any pension eligibility box is checked, set concession type to 2
+				var concessionChecks = document.querySelectorAll(".pension_checkbox");
+				for(i=0;i<concessionChecks.length&&concessionType==0;i++){
+					if(concessionChecks[i].checked){concessionType=2};
+				};
+				// else if if any concession eligibility box is checked, set concession type to 2
+				var concessionChecks = document.querySelectorAll(".concession_checkbox");
+				for(i=0;i<concessionChecks.length&&concessionType==0;i++){
+					if(concessionChecks[i].checked){concessionType=1};
+				};
+				// make the concession check permission checkbox and its label iff any concession is selected
+				document.getElementById("concession_check_permission_div").hidden = (concessionType==0);
+				//make required_if_visible elements required iff visible
+				setRequirements();
+				var fareTypeSpan = document.getElementById("card_type");
+				switch(concessionType){
+					case 0:
+						fareTypeSpan.innerHTML="Adult Full Fare";
+						break;
+					case 1:
+						fareTypeSpan.innerHTML="Concession Fare";
+						break;
+					case 2:
+						fareTypeSpan.innerHTML="Pensioner Fare";
+						break;
+				};
+				
+			}
+
+		</script>
+
+		<div class="tfnsw-family-ribbon">
+			<div class="max-site-width container-fluid">
+				<section id="block-externallinks" data-block-plugin-id="block_content:c2e08a3a-861a-486c-9332-1c3260ca0975" class="block block-block-content block-view-mode-full block-block-contentc2e08a3a-861a-486c-9332-1c3260ca0975 clearfix">
+					<div class="block-content">
+						<div  class="row">
+		
+							<div  class="col-sm-3 col-md-2 hidden-xs">
+								<p  >
+									Other Transport sites:
+								</p>
+							</div>
+		
+							<div class="view view-other-transport-sites view-id-other_transport_sites view-display-id-block_1 js-view-dom-id-2b8726c9982ea9c33461cee93f41f2b7a1de88684831583f0d8c0cc0651600c3 col-sm-9 col-md-10 footer-ribbon">
+								<div class="footer-ribbon--bottom-xs view-content">
+									<h2 class="visible-xs" aria-label="Toggle Other Sites navigation">
+										Other Transport sites:
+										<button class="footer-toggle collapsed" data-target="#footer-menu-toggle-other-transport-sites" data-toggle="collapse" type="button" aria-expanded="false">
+											<span class="sr-only">Other Transport sites:</span>
+											<svg class="tp-icon xs down" aria-hidden="true" focusable="false">
+												<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/tfnsw_bootstrap/assets/icons/icons.svg#tp_arrow_down"></use>
+											</svg>
+										</button>
+									</h2>
+									<ul class="nav navbar-nav collapse" id="footer-menu-toggle-other-transport-sites">
+										<li >
+											<a href="http://www.transport.nsw.gov.au/">Transport for NSW</a>
+										</li>
+										<li >
+											<a href="http://www.rms.nsw.gov.au/">Roads &amp; Maritime</a>
+										</li>
+										<li >
+											<a href="https://www.livetraffic.com">Live Traffic</a>
+										</li>
+									</ul>
+								</div>
+		
+								<div class="footer-ribbon--top-xs view-content">
+									<ul class="nav navbar-nav collapse">
+										<li >
+											<a href="/plan/social-media#facebook" class="link-with-svg">    
+												<svg  class="tp-icon sm" aria-hidden="true" focusable="false" >
+													<!-- -->
+													<use  xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/tfnsw_bootstrap/assets/icons/icons.svg#tp_facebook" >
+														facebook
+													</use>
+													<!-- -->
+												</svg>
+												<span>Facebook</span>
+											</a>
+										</li>
+										<li >
+											<a href="/plan/social-media/twitter" class="link-with-svg">    
+												<svg  class="tp-icon sm" aria-hidden="true" focusable="false" >
+													<!-- -->
+													<use  xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/tfnsw_bootstrap/assets/icons/icons.svg#tp_twitter" >
+														twitter
+													</use>
+													<!-- -->
+												</svg>
+												<span>Twitter</span>
+											</a>
+										</li>
+										<li >
+											<a href="https://www.youtube.com/user/TransportForNSW" class="link-with-svg">    
+												<svg  class="tp-icon sm" aria-hidden="true" focusable="false" >
+													<!-- -->
+													<use  xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/tfnsw_bootstrap/assets/icons/icons.svg#tp_youtube" >
+														youtube
+													</use>
+													<!-- -->
+												</svg>
+												<span>YouTube</span>
+											</a>
+										</li>
+										<li >
+											<a href="https://www.instagram.com/transportfornsw/" class="link-with-svg">    
+												<svg  class="tp-icon sm" aria-hidden="true" focusable="false" >
+													<!-- -->
+													<use  xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/tfnsw_bootstrap/assets/icons/icons.svg#tp_instagram" >
+														instagram
+													</use>
+													<!-- -->
+												</svg>
+												<span>Instagram</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+		
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<footer class="nsw-footer">
+			<div class="nsw-footer__upper">
+			  <div class="nsw-container section-links">
+				  <div class="section-links__group">
+					<h3 class="section-links__heading">About Us</h3>
+					<ul class="section-links__list">
+						<li class="section-links__item"><a href="/about-us">About this site</a></li>
+						<li class="section-links__item"><a href="/news">News</a></li>
+						<li class="section-links__item"><a href="/about-us/site-accessibility">Site accessibility</a>/li>
+						<li class="section-links__item"><a href="/about-us/map-copyright">Map copyright</a></li>
+						<li class="section-links__item"><a href="/about-us/developers-site-owners">For developers and site owners</a></li>
+						<li class="section-links__item"><a href="/about-us/terms-conditions-of-using-this-site">Conditions of using this site</a></li>
+						<li class="section-links__item"><a href="http://www.transport.nsw.gov.au/careers">Jobs in Transport</a></li>
+						<li class="section-links__item"><a href="/about-us/privacy">Privacy statement</a></li>
+						<li class="section-links__item"><a href="/tickets-opal/opal/opal-terms-of-use">Opal terms of use</a></li>
+						<li class="section-links__item"><a href="/tickets-opal/opal/opal-privacy-policy">Opal privacy policy</a></li>
+					</ul>
+				  </div>
+				  <div class="section-links__group">
+					<h3 class="section-links__heading">Help</h3>
+					<ul class="section-links__list">
+						<li class="section-links__item"><a href="/plan/help-with-planning">Help using this site</a></li>
+						<li class="section-links__item"><a href="/plan/help-with-planning/how-to-use-trip-planner">Trip Planner help</a></li>
+						<li class="section-links__item"><a href="/plan/help-with-planning/key-to-icons-line-codes">Key to icons and line colours</a></li>
+					</ul>
+				  </div>
+				  <div class="section-links__group">
+					<h3 class="section-links__heading">Contacts</h3>
+					<ul class="section-links__list">
+						<li class="section-links__item"><a href="/contact-us">Contact us</a></li>
+						<li class="section-links__item"><a href="/operators">Transport operators</a></li>
+						<li class="section-links__item"><a href="/operators?field_type_target_id_1%5B0%5D=977&amp;field_type_target_id_1%5B1%5D=977">School bus operators</a></li>
+						<li class="section-links__item"><a href="/contact-us/lost-property">Lost property</a></li>
+						<li class="section-links__item"><a href="/contact-us/feedback">Feedback, questions and complaints</a></li>
+						<li class="section-links__item"><a href="/contact-us/feedback/regional-booking-enquiry-form">Regional booking enquiries</a></li>
+						<li class="section-links__item"><a href="/contact-us/visit-us">Customer information locations</a></li>
+					</ul>
+				  </div>
+			  </div>
+			</div>
+			<div class="nsw-footer__lower">
+			  <div class="nsw-container">
+				<p>We pay respect to the Traditional Custodians and First Peoples of NSW, and acknowledge their continued connection to their country and culture.</p>
+				<hr>
+				<p>Copyright © 2020</p>
+			  </div>
+			</div>
+		  </footer>
 	</body>
 </html>
