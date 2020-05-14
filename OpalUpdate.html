@@ -2,32 +2,36 @@
 <html lang="en" dir="ltr">
 	<head>
 		<meta charset="utf-8">
-		<title>Update Concession Details</title>
+		<title>Update Concession Details | transportnsw.info</title>
 	</head>
 	<body>
 		<h1>Update Concession Details</h1>
-
-			<div class="existing_concession" id="existing_act_seniors_card">
-				<!-- If there is an existing ACT seniors card registered to the account, put its info and an option to remove it here  -->
-			</div>
-
-			<!-- hide this if there's an existing ACT seniors card -->
-			<input type="checkbox" name="concession" value="act_seniors" id="act_seniors">
-			<label for="act_seniors">Add an ACT Seniors Card</label>
-			<div class="entitlement_details" id="act_seniors_div" hidden>
-				<label for="act_seniors_card_number">Seniors Card Number</label>
-				<input type="text" name="act_seniors_card_number" id="act_seniors_card_number" class="required_if_visible">
-			</div>
 
 			<div class="existing_concession" id="existing_nsw_seniors_card">
 				<!-- If there is an existing NSW seniors card registered to the account, put its info and an option to remove it here  -->
 			</div>
 
 			<!-- hide this if there's an existing NSW seniors card -->
-			<input type="checkbox" name="concession" value="nsw_seniors" id="nsw_seniors">
+			<input type="checkbox" name="concession" class="pension_checkbox" value="nsw_seniors" id="nsw_seniors"
+				onclick="concessionClicked('nsw_seniors')"
+			>
 			<label for="nsw_seniors">Add a NSW Seniors Card</label>
 			<div class="entitlement_details" id="nsw_seniors_div" hidden>
 				<label for="nsw_seniors_card_number">Seniors Card Number</label>
+				<input type="text" name="act_seniors_card_number" id="act_seniors_card_number" class="required_if_visible">
+			</div>
+
+			<div class="existing_concession" id="existing_act_seniors_card">
+				<!-- If there is an existing ACT seniors card registered to the account, put its info and an option to remove it here  -->
+			</div>
+
+			<!-- hide this if there's an existing ACT seniors card -->
+			<input type="checkbox" name="concession" class="pension_checkbox" value="act_seniors" id="act_seniors"
+				onclick="concessionClicked('act_seniors','act_seniors_div')"
+			>
+			<label for="act_seniors">Add an ACT Seniors Card</label>
+			<div class="entitlement_details" id="act_seniors_div" hidden>
+				<label for="act_seniors_card_number">Seniors Card Number</label>
 				<input type="text" name="act_seniors_card_number" id="act_seniors_card_number" class="required_if_visible">
 			</div>
 
@@ -36,7 +40,9 @@
 			</div>
 
 			<!-- hide this if there's an existing War Widow Concession -->
-			<input type="checkbox" name="concession" value="war_widow" id="war_widow">
+			<input type="checkbox" name="concession" class="pension_checkbox" value="war_widow" id="war_widow"
+				onclick="concessionClicked('war_widow','war_widow_div')"
+			>
 			<label for="war_widow">Add a War Widdow Concession Card</label>
 			<div class="war_widow" id="war_widow_div" hidden>
 				<label for="war_widow_concession_number">War Widow/er Transport Concession Card Number</label>
@@ -48,7 +54,9 @@
 			</div>
 
 			<!-- hide this if there's an existing DVA concession -->
-			<input type="checkbox" name="concession" value="ex_defence" id="ex_defence">
+			<input type="checkbox" name="concession" class="pension_checkbox" value="ex_defence" id="ex_defence"
+				onclick="concessionClicked('ex_defence','ex_defence_div')"
+			>
 			<label for="ex_defence">Register as Ex-Defence with a Disability/DVA pensioner</label>
 			<div class="entitlement_details" id="ex_defence_div" hidden>
 				<label for="dva_file_number">Your DVA file number (using capital letters without any spaces e.g. NNN12345) </label>
@@ -62,7 +70,9 @@
 			</div>
 
 			<!-- Pensioners receive a different concession from e.g. newstart recipients but the app should be able to figure which category the user falls in rather than making them do it -->
-			<input type="checkbox" name="concession" value="jobseeker" id="jobseeker">
+			<input type="checkbox" name="concession" class="concession_checkbox" value="jobseeker" id="jobseeker"
+				onclick="concessionClicked('jobseeker','jobseeker_div')"
+			>
 			<label for="jobseeker">Register a Centrelink account</label>
 			<div class="entitlement_details" id="jobseeker_div" hidden>
 				<label for="centrelink_crn">Centrelink Customer Reference Number (CRN)</label>
@@ -73,7 +83,9 @@
 				<!-- If there is a TAFE student number registered to the account, put its info and an option to remove it here  -->
 			</div>
 
-			<input type="checkbox" name="concession" value="tafe_student" id="tafe_student">
+			<input type="checkbox" name="concession" class="concession_checkbox" value="tafe_student" id="tafe_student"
+				onclick="concessionClicked('tafe_student','tafe_student_div')"
+			>
 			<label for="tafe_student">I am now a TAFE NSW student</label>
 			<div class="entitlement_details" id="tafe_student_div" hidden>
 				<label for="tafe_student_number">TAFE NSW Student Learner Number</label>
@@ -84,7 +96,9 @@
 				<!-- If there is a tertiary student ID registered to the account, put its info and an option to remove it here  -->
 			</div>
 
-			<input type="checkbox" name="concession" value="tertiary_student" id="tertiary_student">
+			<input type="checkbox" name="concession" class="concession_checkbox" value="tertiary_student" id="tertiary_student"
+				onclick="concessionClicked('tertiary_student','tertiary_student_div')"
+			>
 			<label for="tertiary_student">I am now a Tertiary Student</label>
 			<div class="entitlement_details" id="tertiary_student_div" hidden>
 				<label for="tertiary_institution">Tertiary Institution</label>
@@ -97,7 +111,9 @@
 				<!-- If there is a TCID registered to the account, put its info and an option to remove it here  -->
 			</div>
 
-			<input type="checkbox" name="concession" value="apprentice_trainee" id="apprentice_trainee">
+			<input type="checkbox" name="concession" class="concession_checkbox" value="apprentice_trainee" id="apprentice_trainee"
+				onclick="concessionClicked('apprentice_trainee','apprentice_trainee_div')"
+			>
 			<label for="apprentice_trainee">I am now an Apprentice or Trainee</label>
 			<div class="entitlement_details" id="apprentice_trainee_div" hidden>
 				<label for="tcid">Training Contract ID (TCID)</label>
@@ -108,7 +124,9 @@
 				<!-- If there is a TCID registered to the account, put its info and an option to remove it here  -->
 			</div>
 
-			<input type="checkbox" name="concession" value="asylum_seeker" id="asylum_seeker">
+			<input type="checkbox" name="concession" class="concession_checkbox" value="asylum_seeker" id="asylum_seeker"
+				onclick="concessionClicked('asylum_seeker','asylum_seeker_div')"
+			>
 			<label for="asylum_seeker">I am an Asylum Seeker</label>
 			<div class="entitlement_details" id="asylum_seeker_div" hidden>
 				<label for="designated_agency">Designated Agency</label>
@@ -166,5 +184,72 @@
 			<input type="submit" value="SAVE">
 
 		</form>
+
+		<script>
+
+			// this should make the div with id "div" hidden if the checkbox with id "checkbox" is checked, and unhidden otherwise- inverted if inverse is true.
+			function matchVisibleToCheckbox(checkboxName,divName,inverse){				
+				document.getElementById(divName).hidden = document.getElementById(checkboxName).checked?inverse:!inverse;
+			};
+
+			// set all required_if_visible elements to be required iff they are visible
+			function setRequirements(){
+				var requiredIfVisibleElements = document.querySelectorAll(".required_if_visible");
+				for(i=0;i<requiredIfVisibleElements.length;i++){
+					requiredIfVisibleElements[i].required=!requiredIfVisibleElements[i].hidden
+				}
+			};
+
+			// function to run whenever a concession checkbox is clicked, with a checkbox-specific parameter
+			function concessionClicked(checkbox){
+				matchVisibleToCheckbox(checkbox,checkbox+"_div",false);
+				var concessionType = 0;
+				// 0=adult,1=concession,2=pension
+				// if any pension eligibility box is checked, set concession type to 2
+				var concessionChecks = document.querySelectorAll(".pension_checkbox");
+				for(i=0;i<concessionChecks.length&&concessionType==0;i++){
+					if(concessionChecks[i].checked){concessionType=2};
+				};
+				// else if if any concession eligibility box is checked, set concession type to 2
+				var concessionChecks = document.querySelectorAll(".concession_checkbox");
+				for(i=0;i<concessionChecks.length&&concessionType==0;i++){
+					if(concessionChecks[i].checked){concessionType=1};
+				};
+				// make the concession check permission checkbox and its label iff any concession is selected
+				document.getElementById("concession_check_permission_div").hidden = (concessionType==0);
+				//make required_if_visible elements required iff visible
+				setRequirements();
+				var fareTypeSpan = document.getElementById("card_type");
+				switch(concessionType){
+					case 0:
+						fareTypeSpan.innerHTML="Adult Full Fare";
+						break;
+					case 1:
+						fareTypeSpan.innerHTML="Concession Fare";
+						break;
+					case 2:
+						fareTypeSpan.innerHTML="Pensioner Fare";
+						break;
+				};
+				
+			}
+
+		</script>
+
+		<footer class="nsw-footer">
+			<div class="nsw-footer__upper">
+			  <div class="nsw-container section-links">
+			  </div>
+			</div>
+			<div class="nsw-footer__lower">
+			  <div class="nsw-container">
+				<p>We pay respect to the Traditional Custodians and First Peoples of NSW, and acknowledge their continued connection to their country and culture.</p>
+				<hr>
+				<ul class="nsw-footer-links">
+				</ul>
+				<p>Copyright © 2020</p>
+			  </div>
+			</div>
+		  </footer>
 	</body>
 </html>
